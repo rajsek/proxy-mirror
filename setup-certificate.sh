@@ -17,11 +17,19 @@ function generateCertificate {
 
 function installFakeCert {
     generateCertificate
-    sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" ./cert/proxy-mirror.crt
+    #sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" ./cert/proxy-mirror.crt
+    #certutil -addstore -f "ROOT" ./cert/proxy-mirror.crt
+    certmgr.exe /add /c /n myCert /s my ./cert/proxy-mirror.crt
+
 }
 
 function uninstallFakeCert {
-    sudo security delete-certificate -c "proxy-mirror" "/Library/Keychains/System.keychain"
+    #sudo security delete-certificate -c "proxy-mirror" "/Library/Keychains/System.keychain"
+    
+    #certmgr.exe -del -c -n "myCert" -s -r localMachine Root
+    certmgr /del /c /n myCert /s my ./cert/proxy-mirror.crt
+
+
 }
 
 
